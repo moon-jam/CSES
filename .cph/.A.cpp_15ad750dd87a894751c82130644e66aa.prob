@@ -1,0 +1,1 @@
+{"name":"Local: A","url":"f:\\CSES\\A.cpp","tests":[{"id":1699099632739,"input":"3\nabc\n","output":"Yes\n"},{"id":1699099653858,"input":"2\nba","output":"Yes"},{"id":1699099668613,"input":"7\natcoder","output":"No"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\CSES\\A.cpp","group":"local","local":true}

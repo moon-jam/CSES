@@ -1,0 +1,1 @@
+{"name":"Local: B","url":"f:\\CSES\\B.cpp","tests":[{"id":1699100144855,"input":"27","output":"3"},{"id":1699100154825,"input":"100","output":"-1"},{"id":1699100165817,"input":"10000000000","output":"10"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\CSES\\B.cpp","group":"local","local":true}
