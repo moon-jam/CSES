@@ -1,3 +1,6 @@
 {
-    "cph.general.saveLocation": "F:\\CSES\\.cph"
+    "cph.general.saveLocation": "",
+    "files.associations": {
+        "valarray": "cpp"
+    }
 }
