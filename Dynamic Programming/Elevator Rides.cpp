@@ -13,29 +13,52 @@
 #define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
 using namespace std;
 
-// dp[20][1<<20], dp[i][j]在0~i台電梯上可以用j的選擇方法搭i電梯的重量(不行inf)
-// dp[i][0] = 0
-// dp[i][1<<k] = w[k]
-// other = inf
-// dp[i][j] = min((dp[i-1][j]<inf), (dp[i][j & ~(1<<k)]+w[k]<=x ? dp[i-1][j & ~(1<<k)]+w[k] : inf)), k=0~n-1
-// ans = (dp[min_i][1<<20]!=inf)
+void bit_out(int num, int digit, bool reverse){
+    if(!reverse)
+        rev(i, digit-1, 0)
+            cout << ((num & (1<<i))!=0) << ' ';
+    else rep(i, 0, digit-1)
+            cout << ((num & (1<<i))!=0) << ' ';
+    cout << '\n';
+}
 
-int dp[22][1<<21];
-int n, w[22], x, inf=3e10;
+// dp[i][0] : minimum rides
+// dp[i][1] : minimum weight
+
+// init
+// dp[i][0] = n
+// dp[i][1] = INT_MAX
+// dp[0][0] = 1, dp[0][1] = 0
+
+// new_weight = dp[i^(1<<j)][1] + w[j]              , j in i
+// dp[i][0] = min(dp[i^(1<<j)][0] + new_weight>x)   , j in i
+// dp[i][1] = dp[i][0]_update ? min(dp[i][1], new_weight) : dp[i][1]    , dp[i][0]==dp[i][0]_ori && new_weight<=x
+// dp[i][1] = dp[i][0]_update ? new_weight : dp[i][1]                   , dp[i][0]<dp[i][0]_ori && new_weight<=x
+// dp[i][1] = dp[i][0]_update ? w[j] : dp[i][1]                         , dp[i][0]<=dp[i][0]_ori && new_weight>x
+
+int dp[1<<21][3];
+int n, w[22], x;
 
 signed main(){
-    // ios;
+    ios;
     cin >> n >> x;
-    int ans = n;
-    rep(i, 0, n-1)
-        rep(j, 0, 1<<n)
-            dp[i][j]=inf;
-    rep(i, 0, n-1) {
-        cin >> w[i];
-        dp[i][0]=0;
-        rep(k, 0, n-1) dp[i][1<<k]=w[k];
-    }dp[n][0]=0; rep(k, 0, n-1) dp[n][1<<k]=w[k];
-    build()
-    cout << ans;
+    rep(i, 0, n-1) cin >> w[i];
+    rep(i, 0, 1<<n)
+        dp[i][0]=n, dp[i][1]=INT_MAX;
+    dp[0][0] = 1, dp[0][1] = 0;
+    rep(i, 1, (1<<n)-1){
+        rep(j, 0, n-1){
+            if(i & (1<<j)){
+                int new_weight = (dp[i^(1<<j)][1]) + w[j];
+                if(dp[i][0] >= dp[i^(1<<j)][0]+(new_weight>x)){
+                    if(dp[i][0] == dp[i^(1<<j)][0] && (new_weight<=x))
+                        dp[i][1] = min(dp[i][1], new_weight);
+                    else dp[i][1] = new_weight>x ? w[j] : new_weight;
+                    dp[i][0] = dp[i^(1<<j)][0]+(new_weight>x);
+                }
+            }
+        }//bit_out(i, n, 1), cout << dp[i][0] << ' ' << dp[i][1] << '\n';
+    }
+    cout << dp[(1<<n)-1][0] << '\n';
     return 0;
 }
