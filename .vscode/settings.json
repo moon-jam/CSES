@@ -1,6 +1,9 @@
 {
-    "cph.general.saveLocation": "",
+    "cph.general.saveLocation": "F:\\CSES\\.cph",
     "files.associations": {
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "initializer_list": "cpp",
+        "cstddef": "cpp",
+        "xtr1common": "cpp"
     }
 }
