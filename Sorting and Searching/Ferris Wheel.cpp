@@ -13,14 +13,12 @@
 #define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 using namespace std;
 
-signed main()
-{
+signed main() {
     ios;
     int n, x, ans = 0;
     cin >> n >> x;
     vector<int> p(n);
-    for (int& i : p)
-        cin >> i;
+    for (int& i : p) cin >> i;
     sort(all(p));
     for (int l = 0, r = n - 1; r >= l;) {
         if (p[l] + p[r] <= x)

@@ -13,8 +13,7 @@
 #define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 using namespace std;
 
-signed main()
-{
+signed main() {
     ios;
     int n, m, k, ans = 0, a[200005], b[200005];
     cin >> n >> m >> k;
