@@ -25,7 +25,7 @@ using namespace std;
 
 signed main() {
     // ios;
-    int n, m, ans = 0, idx = 0;
+    int n, idx = 0, ans = 0, m;
     cin >> n >> m;
     vi arr(n), r(n + 1);
     for (int &i : arr) cin >> i, r[i] = idx++;
@@ -33,14 +33,22 @@ signed main() {
         while (i < n && r[i + 1] > r[i]) i++;
         ans++;
     }
+    // cout << ans << '\n';
     while (m--) {
         int a, b;
-        cin >> a >> b;
-        if (a < b)
-            ans += (arr[a-1] > arr[b-1]) ? 1 : -1;
-        else
-            ans -= (arr[a-1] > arr[b-1]) ? 1 : -1;
-        swap(arr[r[a]], arr[r[b]]);
+        cin >> a >> b, a--, b--;
+        int x = arr[a], y = arr[b];
+        swap(arr[a], arr[b]);
+        if (x-1>=0 && r[x-1] <= r[x] && r[x-1] > b) ans++;
+        if (x-1>=0 && r[x-1] > r[x] && r[x-1] <= b) ans--;
+        if (x+1<=n && r[x] <= r[x+1] && b > r[x+1]) ans++;
+        if (x+1<=n && r[x] > r[x+1] && b <= r[x+1]) ans--;		
+        r[x] = b;
+        if (y-1>=0 && r[y-1] <= r[y] && r[y-1] > a) ans++;
+        if (y-1>=0 && r[y-1] > r[y] && r[y-1] <= a) ans--;
+        if (y+1<=n && r[y] <= r[y+1] && a > r[y+1]) ans++;
+        if (y+1<=n && r[y] > r[y+1] && a <= r[y+1]) ans--;	
+        r[y] = a;
         cout << ans << '\n';
     }
     return 0;
