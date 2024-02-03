@@ -4,7 +4,7 @@
 
 ## [My CSES Profile](https://cses.fi/user/203349)
 
-Solved Tasks: 4/300
+Solved Tasks: 43/300
 
 | Problem Set | Solved | Total |
 | ------- | ------ | ----- |
