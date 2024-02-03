@@ -1,0 +1,1 @@
+{"name":"Local: pf","url":"f:\\nhdk35\\pf.cpp","tests":[{"id":1701586229868,"input":"2\n10 2\n3 2 1\n9 4 5 6\n5 2\n1 2 3\n4","output":"7 8 10 \n5 "},{"id":1701586243282,"input":"1\n10 1\n1 2 3 4 5 6 7 8 9","output":"10 "}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\nhdk35\\pf.cpp","group":"local","local":true}

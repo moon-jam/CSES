@@ -1,0 +1,1 @@
+{"name":"Local: pc2 copy","url":"f:\\2023 vir\\pc2 copy.cpp","tests":[{"id":1701574922941,"input":"1\n30","output":"2\n2 3\n2 3 4\n2 3 4 5\n2 3 4 5 6 8 1\n2 3 4 5 6 8 9 10 12 1 7 11 14 13"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\2023 vir\\pc2 copy.cpp","group":"local","local":true}

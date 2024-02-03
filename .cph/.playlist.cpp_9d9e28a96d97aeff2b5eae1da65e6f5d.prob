@@ -1,0 +1,1 @@
+{"name":"Local: playlist","url":"f:\\CSES\\Sorting and Searching\\playlist.cpp","tests":[{"id":1706027786726,"input":"8\n1 2 1 3 2 7 4 2","output":"5"},{"id":1706028012164,"input":"1\n1","output":"1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\CSES\\Sorting and Searching\\playlist.cpp","group":"local","local":true}

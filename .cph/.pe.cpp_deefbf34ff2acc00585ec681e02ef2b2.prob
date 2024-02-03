@@ -1,0 +1,1 @@
+{"name":"Local: pe","url":"f:\\nhdk35\\pe.cpp","tests":[{"id":1701585524523,"input":"11 11","output":"1111\nYes"},{"id":1701585529312,"input":"4646464646646546 121545488476","output":"4646464646646546121545488476\nNo"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\nhdk35\\pe.cpp","group":"local","local":true}

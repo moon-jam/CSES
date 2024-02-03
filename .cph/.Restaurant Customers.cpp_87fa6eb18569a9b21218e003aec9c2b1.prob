@@ -1,0 +1,1 @@
+{"name":"Local: Restaurant Customers","url":"f:\\CSES\\Sorting and Searching\\Restaurant Customers.cpp","tests":[{"id":1701430064674,"input":"3\n5 8\n2 4\n3 9","output":"2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\CSES\\Sorting and Searching\\Restaurant Customers.cpp","group":"local","local":true}

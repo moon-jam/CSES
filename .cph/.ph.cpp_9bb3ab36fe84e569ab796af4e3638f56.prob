@@ -1,0 +1,1 @@
+{"name":"Local: ph","url":"f:\\nhdk35\\ph.cpp","tests":[{"id":1701588708390,"input":"f(g(7),h(1,2),f(1,1,5))","output":"1204"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\nhdk35\\ph.cpp","group":"local","local":true}

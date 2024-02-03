@@ -1,0 +1,1 @@
+{"name":"Local: pb","url":"f:\\nhdk35\\pb.cpp","tests":[{"id":1701584168442,"input":"10","output":"5.0"},{"id":1701584173681,"input":"11","output":"5.5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\nhdk35\\pb.cpp","group":"local","local":true}

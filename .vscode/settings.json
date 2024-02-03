@@ -4,6 +4,9 @@
         "valarray": "cpp",
         "initializer_list": "cpp",
         "cstddef": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "iostream": "cpp",
+        "xiosbase": "cpp",
+        "iosfwd": "cpp"
     }
 }

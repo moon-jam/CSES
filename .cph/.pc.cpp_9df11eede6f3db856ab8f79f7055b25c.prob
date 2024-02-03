@@ -1,0 +1,1 @@
+{"name":"Local: pc","url":"f:\\nhdk35\\pc.cpp","tests":[{"id":1701584467860,"input":"5 50\n10 20 30 40 50","output":"2"},{"id":1701584478338,"input":"5 100\n1 1 1 1 1","output":"5"},{"id":1701584484665,"input":"3 1\n10 1 1","output":"0"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\nhdk35\\pc.cpp","group":"local","local":true}
