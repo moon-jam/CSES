@@ -4,18 +4,18 @@
 
 ## [My CSES Profile](https://cses.fi/user/203349)
 
-## Solved Tasks: 0/300
+## Solved Tasks: 43/300
 
 | Problem Set | Solved | Total |
 | ------- | ------ | ----- |
-|Introductory Problems| 1 | 19 |
-|Sorting and Searching| 2 | 35 |
-|Dynamic Programming| 0 | 19 |
+|Introductory Problems| 19 | 19 |
+|Sorting and Searching| 12 | 35 |
+|Dynamic Programming| 6 | 19 |
 |Graph Algorithms| 6 | 45 |
 |Range Queries| 0 | 22 |
 |Tree Algorithms| 0 | 15 |
-|Mathematics| 100 | 33 |
-|String Algorithms| 1 | 18 |
+|Mathematics| 0 | 33 |
+|String Algorithms| 0 | 18 |
 |Geometry| 0 | 15 |
 |Advanced Techniques| 0 | 59 |
 |Additional Problems| 0 | 20 |
