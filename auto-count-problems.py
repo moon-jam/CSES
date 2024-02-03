@@ -31,7 +31,7 @@ for i, line in enumerate(lines):
         lines[i] = f"Solved Tasks: {total_solved}/300\n"
     for name, count in solved_problems.items():
         if name in line:
-            lines[i] = f"|{name}| {count} |" + " |".join(line.split("|")[3:])
+            lines[i] = f"|{name}| {count} |" + "|".join(line.split("|")[3:])
 
 # Write the updated content back to README.md
 with open("README.md", "w") as file:
