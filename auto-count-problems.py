@@ -28,7 +28,7 @@ with open("README.md", "r") as file:
 # Update the solved problems count
 for i, line in enumerate(lines):
     if "Solved Tasks:" in line:
-        lines[i] = f"Solved Tasks: {total_solved}/300\n"
+        lines[i] = f"## Solved Tasks: {total_solved}/300\n"
     for name, count in solved_problems.items():
         if name in line:
             lines[i] = f"|{name}| {count} |" + "|".join(line.split("|")[3:])
