@@ -32,7 +32,7 @@ The problem sets and their corresponding directories are defined in the `problem
 
 ```python
 problem_sets = {
-|Introductory Problems| 19 ||Sorting and Searching| 17 ||Dynamic Programming| 6 ||Graph Algorithms| 6 ||Range Queries| 0 ||Tree Algorithms| 0 ||Mathematics| 0 ||String Algorithms| 0 ||Geometry| 0 ||Advanced Techniques| 0 ||Additional Problems| 0 |}
+|Additional Problems| 0 ||Sorting and Searching| 17 ||Dynamic Programming| 6 ||Graph Algorithms| 6 ||Range Queries| 0 ||Tree Algorithms| 0 ||Mathematics| 0 ||String Algorithms| 0 ||Geometry| 0 ||Advanced Techniques| 0 ||Additional Problems| 0 |}
 ```
 
 The total number of solved problems is calculated and the information is written back to the `README.md` file. The script updates the "Solved Tasks" count and the count of solved problems for each problem set.
