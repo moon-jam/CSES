@@ -1,0 +1,1 @@
+{"name":"Local: Subarray Sums I","url":"/Users/moonjam/Desktop/Code/CSES/Sorting and Searching/Subarray Sums I.cpp","tests":[{"id":1709106470583,"input":"5 7\n2 4 1 2 7","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/moonjam/Desktop/Code/CSES/Sorting and Searching/Subarray Sums I.cpp","group":"local","local":true}

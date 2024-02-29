@@ -16,7 +16,7 @@ problem_sets = {
 }
 
 # Count solved problems
-solved_problems = {name: len([f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f)) and not f.startswith("_")]) if os.path.exists(path) else 0 for name, path in problem_sets.items()}
+solved_problems = {name: len([f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f)) and not f.startswith("_") and f.endswith(".cpp")]) if os.path.exists(path) else 0 for name, path in problem_sets.items()}
 
 # Calculate total solved problems
 total_solved = sum(solved_problems.values())

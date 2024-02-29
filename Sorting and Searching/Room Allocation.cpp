@@ -5,7 +5,9 @@ using namespace std;
 #define pii pair<int, int>
 #define F first
 #define S second
+#define vc vector
 #define vi vector<int>
+#define vii vector<pii>
 #define mii map<int, int>
 #define si set<int>
 /* UTILS */
@@ -18,21 +20,32 @@ using namespace std;
 #define pob pop_back
 #define pb push_back
 #define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
 #define sp << " " <<
 #define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
 
 signed main() {
     ios;
-    int n;
+    int n, room = 0;
     cin >> n;
-    vector<pii> m(n);
-    for (pii &i : m) cin >> i.F >> i.S;
-    sort(all(m), [](pii a, pii b) { return a.S < b.S; });
-    int now_e = 0, ans = 0;
-    
-    for (pii i : m) {
-        if (i.F >= now_e) ans++, now_e = i.S;
+    vi ans(n);
+    vector<pair<pii, int>> d(n);
+    rep(i, 0, n - 1) cin >> d[i].F.F >> d[i].F.S, d[i].S = i;
+    sort(all(d));
+    priority_queue<pii, vii, greater<pii>> pq;
+    for (auto i : d) {
+        if (!pq.empty() && pq.top().F < i.F.F) {
+            ans[i.S] = pq.top().S;
+            pq.pop();
+            pq.push({i.F.S, ans[i.S]});
+        } else {
+            ++room;
+            pq.push({i.F.S, room});
+            ans[i.S] = room;
+        }
     }
-    cout << ans << '\n';
+    cout << room << '\n';
+    for(int i : ans) cout << i << ' ';
     return 0;
 }
