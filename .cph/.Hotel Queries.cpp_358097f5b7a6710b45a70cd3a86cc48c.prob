@@ -1,0 +1,1 @@
+{"name":"Local: Hotel Queries","url":"/Users/moonjam/Desktop/Code/CSES/Range Queries/Hotel Queries.cpp","tests":[{"id":1709351532384,"input":"8 5\n3 2 4 1 5 5 2 6\n4 4 7 1 1","output":"3 5 0 1 1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/moonjam/Desktop/Code/CSES/Range Queries/Hotel Queries.cpp","group":"local","local":true}
