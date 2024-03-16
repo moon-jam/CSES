@@ -27,23 +27,24 @@ def generate_markdown(folder, file_order):
     
     # Print not found files to the terminal
     if not_found_files:
-        print("\nFiles not found:")
+        print(f"\nFiles in {folder} not found:")
         print("\n".join(not_found_files))
 
-# User input for folder and files
-folder = input("Enter the folder name: ")
+if __name__ == "__main__":
+    # User input for folder and files
+    folder = input("Enter the folder name: ")
 
-file_order_input = folder_file_order.get(folder)
+    file_order_input = folder_file_order.get(folder)
 
-# print("Enter file names, one per line. Enter an empty line to finish:")
-# file_order_input = []
-# while True:
-#     line = input()
-#     if line == "":
-#         break
-#     file_order_input.append(line)
+    # print("Enter file names, one per line. Enter an empty line to finish:")
+    # file_order_input = []
+    # while True:
+    #     line = input()
+    #     if line == "":
+    #         break
+    #     file_order_input.append(line)
 
-if file_order_input is None:
-    print(f"No file order found for folder {folder}")
-else:
-    generate_markdown(folder, file_order_input)
+    if file_order_input is None:
+        print(f"No file order found for folder {folder}")
+    else:
+        generate_markdown(folder, file_order_input)

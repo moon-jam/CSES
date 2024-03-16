@@ -1,4 +1,6 @@
 import os
+from generate_md import generate_markdown
+from problem_order import folder_file_order
 
 # Define your problem sets and their directories
 problem_sets = {
@@ -30,6 +32,7 @@ for i, line in enumerate(lines):
     if "Solved Tasks:" in line:
         lines[i] = f"Solved Tasks: {total_solved}/300\n"
     for name, count in solved_problems.items():
+        generate_markdown(name, folder_file_order[name])
         if name in line:
             lines[i] = f"|{name}| {count} |" + "|".join(line.split("|")[3:])
 

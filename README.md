@@ -24,7 +24,7 @@ Solved Tasks: 95/300
 
 ## CSES Problem Set Progress Tracker
 
-This Python script, `progress-tracker.py`, is used to track the progress of solved problems in the [CSES Problem Set](https://cses.fi/problemset/).
+This Python script, `progress-tracker.py`, is used to track the progress of solved problems in the [CSES Problem Set](https://cses.fi/problemset/). It also generates a markdown file for each problem set using the `generate_md.py` script.
 
 ### How it works
 
@@ -34,11 +34,9 @@ The problem sets and their corresponding directories are defined in the `problem
 
 ```python
 problem_sets = {
-|Additional Problems| 0 ||Sorting and Searching| 17 ||Dynamic Programming| 6 ||Graph Algorithms| 6 ||Range Queries| 0 ||Tree Algorithms| 0 ||Mathematics| 0 ||String Algorithms| 0 ||Geometry| 0 ||Advanced Techniques| 0 ||Additional Problems| 0 |}
+|Introductory Problems| 19 ||Sorting and Searching| 35 ||Dynamic Programming| 15 ||Graph Algorithms| 7 ||Range Queries| 19 ||Tree Algorithms| 0 ||Mathematics| 0 ||String Algorithms| 0 ||Geometry| 0 ||Advanced Techniques| 0 ||Additional Problems| 0 |}
 ```
 
 The total number of solved problems is calculated and the information is written back to the `README.md` file. The script updates the "Solved Tasks" count and the count of solved problems for each problem set.
 
-## Problem Order and Markdown Generation
-
-The Python script `problem_order.py` defines the order of problems in each problem set. This order is used by the `generate_md.py` script to generate a Markdown file for each problem set. The generated Markdown files are saved in the [Generated Markdown Solutions](./Markdown_Solutions) directory.
+The script also generates a markdown file for each problem set using the [`generate_md.py`](./generate_md.py) script. The order of problems in each problem set is defined in the [`problem_order.py`](./problem_order.py) script. The generated markdown files are saved in the [Generated Markdown Solutions](./Markdown_Solutions/) directory.
