@@ -36,8 +36,8 @@ for i, line in enumerate(lines):
         if "Solved Tasks:" in line:
             lines[i] = f"Solved Tasks: {total_solved}/300\n"
         for name, count in solved_problems.items():
-            generate_markdown(name, folder_file_order[name])
             if name in line:
+                generate_markdown(name, folder_file_order[name])
                 lines[i] = f"|{name}| {count} |" + "|".join(line.split("|")[3:])
 
 # Write the updated content back to README.md
