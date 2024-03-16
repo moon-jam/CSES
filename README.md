@@ -4,6 +4,8 @@
 
 ## [My CSES Profile](https://cses.fi/user/203349)
 
+## [Generated Markdown Solutions](./Markdown_Solutions)
+
 Solved Tasks: 87/300
 
 | Problem Set | Solved | Total |
@@ -36,3 +38,7 @@ problem_sets = {
 ```
 
 The total number of solved problems is calculated and the information is written back to the `README.md` file. The script updates the "Solved Tasks" count and the count of solved problems for each problem set.
+
+## Problem Order and Markdown Generation
+
+The Python script `problem_order.py` defines the order of problems in each problem set. This order is used by the `generate_md.py` script to generate a Markdown file for each problem set. The generated Markdown files are saved in the [Generated Markdown Solutions](./Markdown_Solutions) directory.

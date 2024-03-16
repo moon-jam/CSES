@@ -1,0 +1,1 @@
+{"name":"Local: Counting Towers","url":"/Users/moonjam/Desktop/Code/CSES/Dynamic Programming/Counting Towers.cpp","tests":[{"id":1709993971802,"input":"3\n2\n6\n1337","output":"8\n2864\n640403945"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/moonjam/Desktop/Code/CSES/Dynamic Programming/Counting Towers.cpp","group":"local","local":true}

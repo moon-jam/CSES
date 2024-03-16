@@ -42,12 +42,12 @@ signed main() {
         if (x-1>=0 && r[x-1] <= r[x] && r[x-1] > b) ans++;
         if (x-1>=0 && r[x-1] > r[x] && r[x-1] <= b) ans--;
         if (x+1<=n && r[x] <= r[x+1] && b > r[x+1]) ans++;
-        if (x+1<=n && r[x] > r[x+1] && b <= r[x+1]) ans--;		
+        if (x+1<=n && r[x] > r[x+1] && b <= r[x+1]) ans--;
         r[x] = b;
         if (y-1>=0 && r[y-1] <= r[y] && r[y-1] > a) ans++;
         if (y-1>=0 && r[y-1] > r[y] && r[y-1] <= a) ans--;
         if (y+1<=n && r[y] <= r[y+1] && a > r[y+1]) ans++;
-        if (y+1<=n && r[y] > r[y+1] && a <= r[y+1]) ans--;	
+        if (y+1<=n && r[y] > r[y+1] && a <= r[y+1]) ans--;
         r[y] = a;
         cout << ans << '\n';
     }
