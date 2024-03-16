@@ -32,9 +32,20 @@ The script works by counting the number of files in each problem set directory. 
 
 The problem sets and their corresponding directories are defined in the `problem_sets` dictionary. If a directory does not exist, it is assumed that no problems have been solved in that set.
 
-```python
+``` python
 problem_sets = {
-|Introductory Problems| 19 ||Sorting and Searching| 35 ||Dynamic Programming| 15 ||Graph Algorithms| 7 ||Range Queries| 19 ||Tree Algorithms| 0 ||Mathematics| 0 ||String Algorithms| 0 ||Geometry| 0 ||Advanced Techniques| 0 ||Additional Problems| 0 |}
+    "Introductory Problems": "./Introductory Problems",
+    "Sorting and Searching": "./Sorting and Searching",
+    "Dynamic Programming": "./Dynamic Programming",
+    "Graph Algorithms": "./Graph Algorithms",
+    "Range Queries": "./Range Queries",
+    "Tree Algorithms": "./Tree Algorithms",
+    "Mathematics": "./Mathematics",
+    "String Algorithms": "./String Algorithms",
+    "Geometry": "./Geometry",
+    "Advanced Techniques": "./Advanced Techniques",
+    "Additional Problems": "./Additional Problems",
+}
 ```
 
 The total number of solved problems is calculated and the information is written back to the `README.md` file. The script updates the "Solved Tasks" count and the count of solved problems for each problem set.

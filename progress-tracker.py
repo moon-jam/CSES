@@ -28,13 +28,17 @@ with open("README.md", "r") as file:
     lines = file.readlines()
 
 # Update the solved problems count
+in_code_block = False
 for i, line in enumerate(lines):
-    if "Solved Tasks:" in line:
-        lines[i] = f"Solved Tasks: {total_solved}/300\n"
-    for name, count in solved_problems.items():
-        generate_markdown(name, folder_file_order[name])
-        if name in line:
-            lines[i] = f"|{name}| {count} |" + "|".join(line.split("|")[3:])
+    if "```" in line:
+        in_code_block = not in_code_block
+    if not in_code_block:
+        if "Solved Tasks:" in line:
+            lines[i] = f"Solved Tasks: {total_solved}/300\n"
+        for name, count in solved_problems.items():
+            generate_markdown(name, folder_file_order[name])
+            if name in line:
+                lines[i] = f"|{name}| {count} |" + "|".join(line.split("|")[3:])
 
 # Write the updated content back to README.md
 with open("README.md", "w") as file:
