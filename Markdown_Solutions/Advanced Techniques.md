@@ -96,9 +96,7 @@ File not found.
 
 File not found.
 
-
-
-# Files not found
+## Files not found
 
 Meet in the Middle
 Hamming Distance

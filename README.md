@@ -6,13 +6,13 @@
 
 ## [Generated Markdown Solutions](./Markdown_Solutions)
 
-Solved Tasks: 95/300
+Solved Tasks: 99/300
 
 | Problem Set | Solved | Total |
 | ------- | ------ | ----- |
 |Introductory Problems| 19 | 19 |
 |Sorting and Searching| 35 | 35 |
-|Dynamic Programming| 15 | 19 |
+|Dynamic Programming| 19 | 19 |
 |Graph Algorithms| 7 | 45 |
 |Range Queries| 19 | 22 |
 |Tree Algorithms| 0 | 15 |

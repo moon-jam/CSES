@@ -686,11 +686,113 @@ signed main() {
 
 ## Increasing Subsequence
 
-File not found.
+```c++ Increasing Subsequence
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+signed main() {
+    ios;
+    int n;
+    cin >> n;
+    vi arr;
+    rep(i, 1, n){
+        int num;
+        cin >> num;
+        if(arr.empty()) arr.eb(num);
+        else if(num>arr.back()) arr.eb(num);
+        else *lower_bound(all(arr), num) = num;
+    }cout << arr.size() << '\n';
+    return 0;
+}
+```
 
 ## Projects
 
-File not found.
+```c++ Projects
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int bit[400005];
+int n;
+
+void modify(int pos, int val) {
+    for (; pos <= 2 * n+1; pos += (pos & -pos))
+        tomax(bit[pos], val);
+}
+
+int query(int pos) {
+    int ans = 0;
+    for (; pos > 0; pos -= (pos & -pos)) tomax(ans, bit[pos]);
+    return ans;
+}
+
+signed main() {
+    ios;
+    cin >> n;
+    vector<pair<pii, int>> p(n);
+    vi ord;
+    for (auto &i : p)
+        cin >> i.F.F >> i.F.S >> i.S, ord.eb(i.F.F), ord.eb(i.F.S);
+    sort(all(p));
+    sort(all(ord));
+    for (auto &i : p) {
+        i.F.F = (int)(lower_bound(all(ord), i.F.F) - ord.begin())+1;
+        i.F.S = (int)(lower_bound(all(ord), i.F.S) - ord.begin())+1;
+        modify(i.F.S, query(i.F.F - 1) + i.S);
+        // err(i.F.F sp i.F.S sp query(i.F.F - 1) sp query(i.F.S));
+    }
+    cout << query(2 * n+1) << '\n';
+    return 0;
+}
+```
 
 ## Elevator Rides
 
@@ -764,17 +866,262 @@ signed main(){
 
 ## Counting Tilings
 
-File not found.
+```c++ Counting Tilings
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int mod = 1e9 + 7;
+int dp[11][1003][1 << 11];
+
+signed main() {
+    ios;
+    int n, m;
+    cin >> n >> m;
+    memset(dp, 0, sizeof(dp));
+    dp[n][0][0] = 1;
+    rep(i, 1, m) {
+        rep(j, 0, (1 << n) - 1) dp[0][i][j << 1] = dp[n][i - 1][j];
+
+        rep(j, 1, n) {
+            int x = 1 << (j - 1);
+            int y = 1 << j;
+            rep(set, 0, (1 << (n + 1)) - 1) {
+                dp[j - 1][i][set] %= mod;
+                if ((set & x) && (set & y)) continue;
+                if (set & x)
+                    dp[j][i][set ^ x] += dp[j - 1][i][set];
+                else if (set & y)
+                    dp[j][i][set ^ y] += dp[j - 1][i][set];
+                else {
+                    dp[j][i][set ^ x] += dp[j - 1][i][set];
+                    dp[j][i][set ^ y] += dp[j - 1][i][set];
+                }
+            }
+        }
+    }
+    cout << dp[n][m][0] % mod << '\n';
+    return 0;
+}
+
+
+```
+
+### 神奇定義
+
+```c++ Counting Tilings - 神奇定義
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+/*
+DP[i][j][k]  \rightarrow \text{ solution when we're currently at the point $(i,j) $ and first $i$ bits}\\\text{of $k$ correspond to $j$th column and rest of the bits belong to $j-1$ column}
+*/
+
+int mod = 1e9 + 7;
+int n, m;
+int dp[11][1003][1024];
+int pos[] = {0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512};
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    dp[n][0][(1 << n) - 1] = 1;
+    rep(j, 1, m) {
+        rep(k, 0, (1 << n) - 1) dp[0][j][k] = dp[n][j - 1][k];
+
+        rep(i, 1, n) {
+            rep(k, 0, (1 << n) - 1) {
+                (dp[i][j][k] += dp[i - 1][j][k ^ pos[i]]) %= mod;
+                if (i && (k & pos[i]) && (k & pos[i - 1]))
+                    (dp[i][j][k] += dp[i - 1][j][k ^ pos[i - 1]]) %= mod;
+            }
+        }
+    }
+    cout << dp[n][m][(1 << n) - 1] % mod << '\n';
+    return 0;
+}
+
+```
+
+### 滾動數組壓成一維
+
+```c++ Counting Tilings - 滾動數組壓成一維
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int mod = 1e9 + 7;
+int n, m;
+int dp[1024][2];
+int pos[] = {0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512};
+const int M = 1e9 + 7;
+bool p = 0;
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    dp[(1 << n) - 1][p] = 1;
+    rep(j, 1, m) {
+        rep(i, 1, n) {
+            rep(k, 0, (1 << n) - 1) {
+                (dp[k][!p] = dp[k ^ pos[i]][p]) %= mod;
+                if (i && (k & pos[i]) && (k & pos[i - 1]))
+                    (dp[k][!p] += dp[k ^ pos[i - 1]][p]) %= mod;
+            }
+            p = !p;
+        }
+    }
+    cout << dp[(1 << n) - 1][p] % mod << '\n';
+    return 0;
+}
+
+```
 
 ## Counting Numbers
 
-File not found.
+```c++ Counting Numbers
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
 
+int a, b;
+int dp[20][10], sum[20];
 
+void pre() {
+    rep(i, 0, 9) dp[1][i] = 1;
+    sum[1] = 10;
+    rep(i, 2, 18) {
+        rep(j, 0, 9) {
+            rep(k, 0, 9) if (j != k) dp[i][j] += dp[i - 1][k];
+            if (j) sum[i] += dp[i][j];
+        }
+    }
+}
 
-# Files not found
+int cal(int x) {
+    if (x <= 0) return x + 1;
 
-Increasing Subsequence
-Projects
-Counting Tilings
-Counting Numbers
+    int ans = 0;
+    vector<int> s;
+    while (x > 0) s.eb(x % 10), x /= 10;
+    int n = s.size();
+    s.eb(0);
+    reverse(s.begin(), s.end());
+
+    rev(i, n - 1, 1) ans += sum[i];
+    rep(i, 1, s[1] - 1) ans += dp[n][i];
+
+    rep(i, 1, n - 1) {
+        rep(j, 0, s[i + 1] - 1) if (j != s[i]) ans += dp[n - i][j];
+        if (s[i + 1] == s[i]) break;
+    }
+    bool ok = true;
+    rep(i, 1, n - 1) {
+        if (s[i + 1] == s[i]) ok = false;
+    }
+    ans += ok;
+
+    return ans;
+}
+
+signed main() {
+    ios;
+    pre();
+    cin >> a >> b;
+    cout << cal(b) - cal(a - 1) << '\n';
+    return 0;
+}
+```

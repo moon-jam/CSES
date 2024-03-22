@@ -1,0 +1,1 @@
+{"name":"Local: Increasing Subsequence","url":"/Users/moonjam/Desktop/Code/CSES/Dynamic Programming/Increasing Subsequence.cpp","tests":[{"id":1710573280849,"input":"8\n7 3 5 3 6 2 9 8","output":"4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/moonjam/Desktop/Code/CSES/Dynamic Programming/Increasing Subsequence.cpp","group":"local","local":true}
