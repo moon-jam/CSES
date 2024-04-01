@@ -20,7 +20,7 @@ def generate_markdown(folder, file_order):
     for file_name in file_order:
         cpp_file_path = os.path.join(folder, file_name + ".cpp")
         if os.path.exists(cpp_file_path):
-            with open(cpp_file_path, 'r') as file:
+            with open(cpp_file_path, 'r', encoding='utf-8') as file:
                 file_content = file.read()
                 markdown_content += f"## {file_name}\n\n```c++ {file_name}\n{file_content}\n```\n\n"
                 # Check if there are any topics for this title
@@ -40,7 +40,7 @@ def generate_markdown(folder, file_order):
     if not os.path.exists('Markdown_Solutions'):
         os.mkdir('Markdown_Solutions')
     
-    with open(os.path.join('Markdown_Solutions', f"{folder}.md"), 'w') as md_file:
+    with open(os.path.join('Markdown_Solutions', f"{folder}.md"), 'w', encoding='utf-8')  as md_file:
         md_file.write(markdown_content)
     
     # Print not found files to the terminal
