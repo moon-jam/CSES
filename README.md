@@ -1,19 +1,21 @@
 # CSES code
 
+> Write CSES problems every day to keep myself familiar with algorithms.
+
 ## [CSES Problem Set](https://cses.fi/problemset/list/)
 
 ## [My CSES Profile](https://cses.fi/user/203349)
 
 ## [Generated Markdown Solutions](./Markdown_Solutions)
 
-Solved Tasks: 102/300
+Solved Tasks: 116/300
 
 | Problem Set | Solved | Total |
 | ------- | ------ | ----- |
 |Introductory Problems| 19 | 19 |
 |Sorting and Searching| 35 | 35 |
 |Dynamic Programming| 19 | 19 |
-|Graph Algorithms| 10 | 45 |
+|Graph Algorithms| 24 | 45 |
 |Range Queries| 19 | 22 |
 |Tree Algorithms| 0 | 15 |
 |Mathematics| 0 | 33 |

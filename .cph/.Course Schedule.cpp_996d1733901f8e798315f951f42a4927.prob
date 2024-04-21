@@ -1,0 +1,1 @@
+{"name":"Local: Course Schedule","url":"d:\\CSES\\Graph Algorithms\\Course Schedule.cpp","tests":[{"id":1713529807876,"input":"5 3\n1 2\n3 1\n4 5","output":"3 4 1 5 2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\CSES\\Graph Algorithms\\Course Schedule.cpp","group":"local","local":true}

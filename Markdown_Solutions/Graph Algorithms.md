@@ -632,61 +632,1138 @@ signed main() {
 }
 ```
 
+### SPFA
+
+```c++ High Score - SPFA
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m, a, b, x;
+vii g[3005];
+vi hg[3005], rg[3005];
+int dis[3005], cnt[3005];
+bool bad = false;
+bool vis[3005], rvis[3005];
+bool inq[3005];
+
+void dfs(int rt) {
+    if (vis[rt]) return;
+    vis[rt] = 1;
+    for (int i : hg[rt]) dfs(i);
+}
+
+void rdfs(int rt) {
+    if (rvis[rt]) return;
+    rvis[rt] = 1;
+    for (int i : rg[rt]) rdfs(i);
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, m) {
+        cin >> a >> b >> x;
+        g[a].eb(b, x);
+        hg[a].eb(b), rg[b].eb(a);
+    }
+    dfs(1), rdfs(n);
+    queue<int> q;
+    rep(i, 1, n) dis[i] = -1e18;
+    dis[1] = 0, q.push(1);
+    bool bye = false;
+    while (!q.empty() && !bye) {
+        int cur = q.front();
+        q.pop();
+        inq[cur] = 0;
+        for (auto i : g[cur]) {
+            if (dis[i.F] < dis[cur] + i.S) {
+                dis[i.F] = dis[cur] + i.S;
+                if (!inq[i.F]) inq[i.F] = 1, q.push(i.F);
+                cnt[i.F]++;
+                if (cnt[i.F] >= n && vis[i.F] && rvis[i.F]) {
+                    bad = 1;
+                    bye = true;
+                    break;
+                }
+                if (cnt[i.F] >= 2 * n) {
+                    bye = 1;
+                    break;
+                }
+            }
+        }
+    }
+    if (bad)
+        cout << "-1\n";
+    else
+        cout << dis[n] << '\n';
+    return 0;
+}
+```
+
 ## Flight Discount
 
-File not found.
+```c++ Flight Discount
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m, a, b, x;
+vii g[100005], rg[100005];
+int dis[100005], rdis[100005];
+bool vis[100005], rvis[100005];
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, m) cin >> a >> b >> x, g[a].eb(b, x), rg[b].eb(a, x);
+    priority_queue<pii, vii, greater<pii>> pq;
+    pq.push({0, 1}), dis[1] = 0;
+    rep(i, 2, n) dis[i] = 1e18;
+    while (!pq.empty()) {
+        pii cur = pq.top();
+        pq.pop();
+        if (vis[cur.S]) continue;
+        vis[cur.S] = 1;
+        for (pii i : g[cur.S]) {
+            if (cur.F + i.S < dis[i.F]) {
+                dis[i.F] = cur.F + i.S;
+                pq.push({dis[i.F], i.F});
+            }
+        }
+    }
+    pq.push({0, n}), rdis[n] = 0;
+    rep(i, 1, n-1) rdis[i] = 1e18;
+    while (!pq.empty()) {
+        pii cur = pq.top();
+        pq.pop();
+        if (rvis[cur.S]) continue;
+        rvis[cur.S] = 1;
+        for (pii i : rg[cur.S]) {
+            if (cur.F + i.S < rdis[i.F]) {
+                rdis[i.F] = cur.F + i.S;
+                pq.push({rdis[i.F], i.F});
+            }
+        }
+    }
+    int ans = 1e18;
+    rep(i, 1, n) {
+        for (pii j : g[i]) tomin(ans, dis[i] + j.S / 2 + rdis[j.F]);
+    }
+    cout << ans << '\n';
+    return 0;
+}
+```
 
 ## Cycle Finding
 
-File not found.
+```c++ Cycle Finding
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+signed main() {
+    ios;
+    int n, m, nc = 0;
+    cin >> n >> m;
+    vii dis(n+1);
+    vector<tuple<int, int, int> > g(m);
+    for(auto &[a, b, c] : g) cin >> a >> b >> c;
+    rep(i, 1, n){
+        nc = 0;
+        for(auto [a, b, c] : g){
+            if(dis[b].F > dis[a].F+c){
+                dis[b].F = dis[a].F + c;
+                dis[b].S = a;
+                nc = a;
+            }
+        }
+    }
+
+    if (nc) {
+        cout << "YES\n";
+        rep(i, 1, n) nc = dis[nc].S;
+        cout << nc;
+        vi ans;
+        ans.eb(nc);
+        for(int cur = dis[nc].S; cur != nc; cur = dis[cur].S) ans.eb(cur);
+        reverse(all(ans));
+        for(int i : ans) cout sp i;
+    } else {
+        cout << "NO\n";
+    }
+    return 0;
+}
+```
+
+### SPFA
+
+```c++ Cycle Finding - SPFA
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+ 
+vii g[3003];
+pii dis[3003];
+int n, m, a, b, c;
+int nc = 0;
+vi ans;
+int vis[3003];
+bool inq[3003];
+ 
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, m) cin >> a >> b >> c, g[a].eb(b, c);
+    
+    queue<int> q;
+    rep(i, 1, n) q.push(i), inq[i] = 1;
+    while(!q.empty() && !nc){
+        int cur = q.front();
+        q.pop();
+        inq[cur] = 0;
+        for(pii i : g[cur]){
+            if(dis[i.F].F > dis[cur].F + i.S){
+                dis[i.F].F = dis[cur].F + i.S;
+                dis[i.F].S = cur;
+                vis[i.F]++;
+                if(vis[i.F]>=n) {nc=i.F; break;}
+                if(!inq[i.F]) q.push(i.F), inq[i.F] = 1;
+            }
+        }
+    }
+    
+    if (nc) {
+        cout << "YES\n";
+        rep(i, 1, n) nc = dis[nc].S;
+        cout << nc;
+        vi ans;
+        ans.eb(nc);
+        for(int cur = dis[nc].S; cur != nc; cur = dis[cur].S) ans.eb(cur);
+        reverse(all(ans));
+        for(int i : ans) cout sp i;
+    } else {
+        cout << "NO\n";
+    }
+    return 0;
+}
+```
 
 ## Flight Routes
 
-File not found.
+```c++ Flight Routes
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m, k, a, b, w;
+vi dis[100005];
+vii g[100005];
+
+signed main() {
+    ios;
+    cin >> n >> m >> k;
+    rep(i, 1, m) cin >> a >> b >> w, g[a].eb(b, w);
+    priority_queue<pii, vii, greater<pii> > pq;
+    pq.push({0, 1});
+    while (!pq.empty()) {
+        pii cur = pq.top();
+        pq.pop();
+        if (dis[cur.S].size() >= k) continue;
+        dis[cur.S].eb(cur.F);
+        for (pii i : g[cur.S]) pq.push({cur.F + i.S, i.F});
+    }
+    for (int i : dis[n]) cout << i << ' ';
+    return 0;
+}
+```
 
 ## Round Trip II
 
-File not found.
+```c++ Round Trip II
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m, a, b;
+vi g[100005];
+vi ans;
+bool vis[100005];
+bool cur_vis[100005];
+
+int dfs(int rt) {
+    if (cur_vis[rt] || !ans.empty()) return 0;
+    vis[rt] = cur_vis[rt] = 1;
+    for (int i : g[rt]) {
+        if (cur_vis[i]) {
+            ans.eb(i), ans.eb(rt);
+            return i;
+        } else if(!vis[i]) { // 若是vis[i]，則代表以i作為其中一點，一定不會形成環
+            int flag = dfs(i);
+            if (!flag && !ans.empty()) return 0;
+            if (!flag) continue;
+            ans.eb(rt);
+            if (flag == rt) return 0;
+            return flag;
+        }
+    }
+    cur_vis[rt] = 0;
+    return 0;
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, m) cin >> a >> b, g[a].eb(b);
+    rep(i, 1, n) if (!vis[i] && ans.empty()) dfs(i);
+    if (ans.empty())
+        cout << "IMPOSSIBLE";
+    else {
+        cout << ans.size() << '\n';
+        reverse(all(ans));
+        for (int i : ans) cout << i << ' ';
+    }
+    return 0;
+}
+```
 
 ## Course Schedule
 
-File not found.
+```c++ Course Schedule
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m;
+vi g[100005];
+int deg[100005];
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, m){
+        int a, b;
+        cin >> a >> b;
+        deg[b]++;
+        g[a].eb(b);
+    }
+    queue<int> q;
+    vi ord;
+    int cnt = 0;
+    rep(i, 1, n) {
+        if(deg[i]==0) q.push(i);
+    }
+    while(!q.empty()){
+        ord.eb(q.front()), q.pop();
+        cnt++;
+        for(int i : g[ord.back()]){
+            deg[i]--;
+            if(deg[i]==0)q.push(i);
+        }
+    }
+    if(cnt != n) {
+        cout << "IMPOSSIBLE\n";
+    } else {
+        for(int i : ord) cout << i << ' ';
+    }
+    return 0;
+}
+```
 
 ## Longest Flight Route
 
-File not found.
+```c++ Longest Flight Route
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m;
+vi g[100005];
+int deg[100005];
+int dis[100005];
+int last[100005];
+bool vis[100005];
+
+void dfs(int rt){
+    if(vis[rt]) return;
+    vis[rt] = 1;
+    for(int i : g[rt]){
+        deg[i]++;
+        dfs(i);
+    }
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, m){
+        int a, b;
+        cin >> a >> b;
+        g[a].eb(b);
+    }
+    dfs(1);
+    if(!vis[n]){
+        cout << "IMPOSSIBLE\n";
+        return 0;
+    }
+    vi st;
+    st.eb(1);
+    while(!st.empty()){
+        int cur = st.back();
+        st.pob();
+        for(int i : g[cur]){
+            deg[i]--;
+            if(dis[i] < dis[cur]+1){
+                dis[i] = dis[cur]+1;
+                last[i] = cur;
+            }
+            if(deg[i]==0) st.eb(i);
+        }
+    }
+    cout << dis[n]+1 << '\n';
+    vi ans;
+    for(int i = n; i!=0; i=last[i]){
+        ans.eb(i);
+    }
+    reverse(all(ans));
+    for(int i : ans) cout << i << ' ';
+    return 0;
+}
+```
 
 ## Game Routes
 
-File not found.
+```c++ Game Routes
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int mod = 1e9+7;
+
+vi g[100005];
+int deg[100005];
+int n, m;
+int way[100005];
+bool vis[100005];
+
+void dfs(int rt){
+    if(vis[rt]) return;
+    vis[rt] = 1;
+    for(int i : g[rt]){
+        deg[i]++;
+        dfs(i);
+    }
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, m){
+        int a, b;
+        cin >> a >> b;
+        g[a].eb(b);
+    }
+    dfs(1);
+    way[1] = 1;
+    vi v;
+    v.eb(1);
+    while(!v.empty()){
+        int cur = v.back();
+        v.pob();
+        for(int i : g[cur]){
+            way[i] += way[cur] %= mod;
+            deg[i]--;
+            if(deg[i] == 0) v.eb(i);
+        }
+    }
+    cout << way[n] % mod << '\n';
+    return 0;
+}
+```
 
 ## Investigation
 
-File not found.
+```c++ Investigation
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int mod = 1e9+7;
+
+int n, m;
+vii g[100005];
+int dis[100005];
+int way[100005];
+int max_route[100005];
+int min_route[100005];
+bool vis[100005];
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, m){
+        int a, b, c;
+        cin >> a >> b >> c;
+        g[a].eb(b,c);
+    }
+    fill(dis, dis+n+1, 1e18);
+    fill(min_route, min_route+n+1, 1e18);
+    priority_queue<pii, vii, greater<pii>> pq;
+    pq.push({0, 1}), dis[1]=0, way[1]=1, max_route[1]=min_route[1]=0;
+    while(!pq.empty()){
+        pii cur = pq.top();
+        pq.pop();
+        if(vis[cur.S]) continue;
+        vis[cur.S]=1;
+        for(pii i: g[cur.S]){
+            if(dis[i.F] == cur.F+i.S){
+                (way[i.F] += way[cur.S]) %= mod;
+                tomax(max_route[i.F], max_route[cur.S]+1);
+                tomin(min_route[i.F], min_route[cur.S]+1);
+            }
+            if(dis[i.F] > cur.F+i.S){
+                dis[i.F] = cur.F+i.S;
+                way[i.F] = way[cur.S];
+                max_route[i.F] = max_route[cur.S]+1;
+                min_route[i.F] = min_route[cur.S]+1;
+                pq.push({dis[i.F], i.F});
+            }
+        }
+    }
+    cout << dis[n] sp way[n] sp min_route[n] sp max_route[n] << '\n';
+    return 0;
+}
+```
 
 ## Planets Queries I
 
-File not found.
+```c++ Planets Queries I
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, q;
+int ch[200005][31]; //[i][j] -> 2^j th child of i
+
+void build(){
+    rep(i, 1, 30)
+        rep(j, 1, n)
+            ch[j][i] = ch[ch[j][i-1]][i-1];
+}
+
+int query(int x, int k){
+    for(int i = 0;k!=0; k>>=1, i++)
+        if(k & 1)
+            x = ch[x][i];
+    return x;
+}
+
+signed main() {
+    ios;
+    cin >> n >> q;
+    rep(i, 1, n) cin >> ch[i][0];
+    build();
+    while(q--){
+        int x, k;
+        cin >> x >> k;
+        cout << query(x, k) << '\n';
+    }
+    return 0;
+}
+```
 
 ## Planets Queries II
 
-File not found.
+```c++ Planets Queries II
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, q;
+int go[200005];
+vi rgo[200005];
+int boss[200005];
+int sizeC[200005];
+int idxC[200005];  // from is big
+int idxA[200005];  // from is big
+bool inC[200005];
+bool tmpC[200005];
+bool vis[200005];
+
+int find_boss(int ch) {
+    if (ch == boss[ch]) return ch;
+    return boss[ch] = find_boss(boss[ch]);
+}
+
+int dfs(int rt) {
+    if (vis[rt]) return rt;
+    vis[rt] = 1;
+    int flag = dfs(go[rt]);
+    if (!sizeC[find_boss(rt)]) {
+        inC[rt] = 1;
+        idxC[rt] = idxC[go[rt]] + 1;
+        if (flag == rt) sizeC[find_boss(rt)] = idxC[rt];
+    }
+    return flag;
+}
+
+void dfs2(int rt, int id) {
+    idxA[rt] = id;
+    for (int i : rgo[rt])
+        if (!inC[i]) dfs2(i, id + 1);
+}
+
+int ch[200005][31];  //[i][j] -> 2^j th child of i
+
+void build() { rep(i, 1, 30) rep(j, 1, n) ch[j][i] = ch[ch[j][i - 1]][i - 1]; }
+
+int query(int x, int k) {
+    for (int i = 0; k != 0; k >>= 1, i++)
+        if (k & 1) x = ch[x][i];
+    return x;
+}
+
+signed main() {
+    ios;
+    cin >> n >> q;
+    rep(i, 1, n) boss[i] = i;
+    rep(i, 1, n) cin >> go[i], rgo[go[i]].eb(i), boss[find_boss(i)] = boss[find_boss(go[i])], ch[i][0] = go[i];
+    rep(i, 1, n) dfs(i);
+    rep(i, 1, n) if (inC[i]) dfs2(i, 0);
+    build();
+    while (q--) {
+        int a, b;
+        cin >> a >> b;
+        if (find_boss(a) != find_boss(b))
+            cout << "-1\n";
+        else {
+            if (inC[a] && inC[b])
+                cout << (idxC[a] - idxC[b] + sizeC[find_boss(a)]) % sizeC[find_boss(a)] << '\n';
+            else if (!inC[a] && inC[b])
+                cout << idxA[a] + (idxC[query(a, idxA[a])] - idxC[b] + sizeC[find_boss(a)]) % sizeC[find_boss(a)] << '\n';
+            else if (idxA[a] >= idxA[b] && query(a, idxA[a] - idxA[b]) == b)
+                cout << idxA[a] - idxA[b] << '\n';
+            else
+                cout << "-1\n";
+        }
+    }
+    return 0;
+}
+```
 
 ## Planets Cycles
 
-File not found.
+```c++ Planets Cycles
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n;
+int boss[200005];
+int go[200005];
+vi rgo[200005];
+int idxA[200005];
+int sizeC[200005];
+bool inC[200005];
+bool vis[200005];
+
+int find_boss(int ch) {
+    if (ch == boss[ch]) return ch;
+    return boss[ch] = find_boss(boss[ch]);
+}
+
+int dfs(int rt, int &cSize) {
+    if (vis[rt]) return rt;
+    vis[rt] = 1;
+    int flag = dfs(go[rt], cSize);
+    if (!sizeC[find_boss(rt)]) {
+        inC[rt] = 1;
+        cSize++;
+        if (rt == flag) sizeC[find_boss(rt)] = cSize;
+    }
+    return flag;
+}
+
+void dfs2(int rt, int id) {
+    idxA[rt] = id;
+    for (int i : rgo[rt])
+        if (!inC[i]) dfs2(i, id + 1);
+}
+
+signed main() {
+    ios;
+    cin >> n;
+    rep(i, 1, n) boss[i] = i;
+    rep(i, 1, n) cin >> go[i], rgo[go[i]].eb(i), boss[find_boss(i)] = boss[find_boss(go[i])];
+    for (int i = 1, cSize = 0; i <= n; i++, cSize = 0) dfs(i, cSize);
+    rep(i, 1, n) if (inC[i]) dfs2(i, 0);
+    rep(i, 1, n) { cout << idxA[i] + sizeC[find_boss(i)] << ' '; }
+    return 0;
+}
+```
 
 ## Road Reparation
 
-File not found.
+```c++ Road Reparation
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m, edge = 0, cost = 0;
+int boss[200005];
+vector<tuple<int, int, int>> g, tg;
+
+int find_boss(int ch){
+    if(ch == boss[ch]) return ch;
+    return boss[ch] = find_boss(boss[ch]);
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    g.resize(m);
+    rep(i, 1, n) boss[i] = i;
+    for(auto &[w, u, v] : g) cin >> u >> v >> w;
+    sort(all(g));
+    for(auto [w, u, v] : g){
+        if(find_boss(u) == find_boss(v)) continue;
+        boss[find_boss(u)] = boss[find_boss(v)];
+        cost += w;
+        edge++;
+    }
+    if(edge != n-1) cout << "IMPOSSIBLE\n";
+    else cout << cost << '\n';
+    return 0;
+}
+```
 
 ## Road Construction
 
-File not found.
+```c++ Road Construction
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m, maxB;
+int boss[100005];
+int sizeB[100005];
+
+int find_boss(int ch) {
+    if (ch == boss[ch]) return ch;
+    return boss[ch] = find_boss(boss[ch]);
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, n) boss[i] = i, sizeB[i] = 1;
+    while (m--) {
+        int a, b;
+        cin >> a >> b;
+        if (find_boss(a) != find_boss(b))
+            n--, tomax(maxB, sizeB[find_boss(b)] += sizeB[find_boss(a)]), boss[find_boss(a)] = boss[find_boss(b)];
+        cout << n sp maxB << '\n';
+    }
+    return 0;
+}
+```
 
 ## Flight Routes Check
 
-File not found.
+```c++ Flight Routes Check
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m;
+int boss[200005];
+bool ok = false;
+
+int find_boss(int ch){
+    if(ch == boss[ch]) return ch;
+    return boss[ch] = find_boss(boss[ch]);
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, n*2) boss[i] = i;
+    while(m--){
+        int a, b;
+        cin >> a >> b;
+        boss
+    }
+    return 0;
+}
+```
 
 ## Planets and Kingdoms
 
@@ -738,20 +1815,6 @@ File not found.
 
 ## Files not found
 
-Flight Discount
-Cycle Finding
-Flight Routes
-Round Trip II
-Course Schedule
-Longest Flight Route
-Game Routes
-Investigation
-Planets Queries I
-Planets Queries II
-Planets Cycles
-Road Reparation
-Road Construction
-Flight Routes Check
 Planets and Kingdoms
 Giant Pizza
 Coin Collector

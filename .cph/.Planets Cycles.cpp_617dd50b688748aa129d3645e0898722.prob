@@ -1,0 +1,1 @@
+{"name":"Local: Planets Cycles","url":"d:\\CSES\\Graph Algorithms\\Planets Cycles.cpp","tests":[{"id":1713687904266,"input":"5\n2 4 3 1 4","output":"3 3 1 3 4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\CSES\\Graph Algorithms\\Planets Cycles.cpp","group":"local","local":true}
