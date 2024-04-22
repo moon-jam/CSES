@@ -25,43 +25,52 @@ using namespace std;
 #define sp << " " <<
 #define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
 
-int n, m;
-int no = -1;
-vi g[100005], rg[100005];
-bool vis[100005], rvis[100005];
+#define n(a) ((a + m) % (2 * m) == 0 ? 2 * m : (a + m) % (2 * m))
 
-void dfs(int rt){
-    if(vis[rt]) return;
+int n, m, id = 0;
+vi g[200005], rg[200005], ord;
+int idx[200005];
+bool vis[200005], rvis[200005];
+
+void dfs(int rt) {
+    if (vis[rt]) return;
     vis[rt] = 1;
-    for(int i : g[rt]) dfs(i);
+    for (int i : g[rt]) dfs(i);
+    ord.eb(rt);
 }
 
-void rdfs(int rt){
-    if(rvis[rt]) return;
+void rdfs(int rt) {
+    if (rvis[rt]) return;
     rvis[rt] = 1;
-    for(int i : rg[rt]) rdfs(i);
+    idx[rt] = id;
+    for (int i : rg[rt]) rdfs(i);
 }
 
 signed main() {
     ios;
     cin >> n >> m;
-    rep(i, 1, m){
+    rep(i, 1, n) {
         int a, b;
-        cin >> a >> b;
-        g[a].eb(b);
-        rg[b].eb(a);
+        char aa, bb;
+        cin >> aa >> a >> bb >> b;
+        if (aa == '-') a = n(a);
+        if (bb == '-') b = n(b);
+        g[n(a)].eb(b);
+        g[n(b)].eb(a);
+        rg[b].eb(n(a));
+        rg[a].eb(n(b));
     }
-    dfs(1), rdfs(1);
-    rep(i, 1, n){
-        if(!vis[i]) {
-            cout << "NO\n" << 1 sp i << '\n';
+    rep(i, 1, m * 2) dfs(i);
+    reverse(all(ord));
+    for (int i : ord)
+        if (!rvis[i]) id++, rdfs(i);
+    rep(i, 1, m * 2) 
+        if (idx[i] == idx[n(i)]) {
+            cout << "IMPOSSIBLE\n";
             return 0;
         }
-        if(!rvis[i]){
-            cout << "NO\n" << i sp 1 << '\n';
-            return 0;
-        }
-    }
-    cout << "YES\n";
+    rep(i, 1, m) 
+        if(idx[i]>idx[n(i)]) cout << "+ ";
+        else cout << "- ";
     return 0;
 }

@@ -25,43 +25,39 @@ using namespace std;
 #define sp << " " <<
 #define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
 
+int id = 0;
 int n, m;
-int no = -1;
-vi g[100005], rg[100005];
+vi g[100005], rg[100005], ord;
+int idx[100005];
 bool vis[100005], rvis[100005];
 
 void dfs(int rt){
     if(vis[rt]) return;
     vis[rt] = 1;
     for(int i : g[rt]) dfs(i);
+    ord.eb(rt);
 }
 
 void rdfs(int rt){
     if(rvis[rt]) return;
     rvis[rt] = 1;
     for(int i : rg[rt]) rdfs(i);
+    idx[rt] = id;
 }
 
 signed main() {
     ios;
     cin >> n >> m;
-    rep(i, 1, m){
+    rep(i, 1, m) {
         int a, b;
         cin >> a >> b;
         g[a].eb(b);
         rg[b].eb(a);
     }
-    dfs(1), rdfs(1);
-    rep(i, 1, n){
-        if(!vis[i]) {
-            cout << "NO\n" << 1 sp i << '\n';
-            return 0;
-        }
-        if(!rvis[i]){
-            cout << "NO\n" << i sp 1 << '\n';
-            return 0;
-        }
-    }
-    cout << "YES\n";
+    rep(i, 1, n) dfs(i);
+    reverse(all(ord));
+    for(int i : ord) if(!rvis[i]) id++,rdfs(i);
+    cout << id << '\n';
+    rep(i, 1, n) cout << idx[i] << ' ';
     return 0;
 }

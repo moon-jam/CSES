@@ -8,14 +8,14 @@
 
 ## [Generated Markdown Solutions](./Markdown_Solutions)
 
-Solved Tasks: 116/300
+Solved Tasks: 118/300
 
 | Problem Set | Solved | Total |
 | ------- | ------ | ----- |
 |Introductory Problems| 19 | 19 |
 |Sorting and Searching| 35 | 35 |
 |Dynamic Programming| 19 | 19 |
-|Graph Algorithms| 24 | 45 |
+|Graph Algorithms| 26 | 45 |
 |Range Queries| 19 | 22 |
 |Tree Algorithms| 0 | 15 |
 |Mathematics| 0 | 33 |
