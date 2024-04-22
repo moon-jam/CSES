@@ -15,14 +15,14 @@ Solved Tasks: 118/300
 |Introductory Problems| 19 | 19 |
 |Sorting and Searching| 35 | 35 |
 |Dynamic Programming| 19 | 19 |
-|Graph Algorithms| 26 | 45 |
-|Range Queries| 19 | 22 |
-|Tree Algorithms| 0 | 15 |
-|Mathematics| 0 | 33 |
-|String Algorithms| 0 | 18 |
-|Geometry| 0 | 15 |
-|Advanced Techniques| 0 | 59 |
-|Additional Problems| 0 | 20 |
+|Graph Algorithms| 26 | 36 |
+|Range Queries| 19 | 19 |
+|Tree Algorithms| 0 | 16 |
+|Mathematics| 0 | 31 |
+|String Algorithms| 0 | 17 |
+|Geometry| 0 | 7 |
+|Advanced Techniques| 0 | 24 |
+|Additional Problems| 0 | 77 |
 
 ## CSES Problem Set Progress Tracker
 
