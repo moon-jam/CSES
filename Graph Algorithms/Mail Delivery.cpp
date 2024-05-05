@@ -25,39 +25,46 @@ using namespace std;
 #define sp << " " <<
 #define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
 
-int id = 0;
-int n, m;
-vi g[100005], rg[100005], ord;
-int idx[100005];
-bool vis[100005], rvis[100005];
+int n, m, odd=1, ed=1, cnt_odd = 0;
+int deg[100005];
+vi g[100005], ans;
+bool vis[100005];
+map<pii, bool> evis;
 
 void dfs(int rt){
-    if(vis[rt]) return;
     vis[rt] = 1;
-    for(int i : g[rt]) dfs(i);
-    ord.eb(rt);
-}
-
-void rdfs(int rt){
-    if(rvis[rt]) return;
-    rvis[rt] = 1;
-    for(int i : rg[rt]) rdfs(i);
-    idx[rt] = id;
+    while(!g[rt].empty()){
+        int cur = g[rt].back();
+        g[rt].pob();
+        if(evis[{rt, cur}]) continue;
+        evis[{rt, cur}] = 1, evis[{cur, rt}] = 1, dfs(cur);
+        ans.eb(rt);
+    }
 }
 
 signed main() {
     ios;
     cin >> n >> m;
-    rep(i, 1, m) {
+    si cg;
+    rep(i, 1, m){
         int a, b;
         cin >> a >> b;
-        g[a].eb(b);
-        rg[b].eb(a);
+        g[a].eb(b), g[b].eb(a);
+        deg[a]++, deg[b]++;
+        cg.insert(a), cg.insert(b);
     }
-    rep(i, 1, n) dfs(i);
-    reverse(all(ord));
-    for(int i : ord) if(!rvis[i]) id++,rdfs(i);
-    cout << id << '\n';
-    rep(i, 1, n) cout << idx[i] << ' ';
+    rep(i, 1, n) if(deg[i]&1) ed = odd, odd = i, cnt_odd++;
+    if(cnt_odd!=0) {
+        cout << "IMPOSSIBLE\n";
+        return 0;
+    }
+    dfs(odd);
+    for(int i : cg) if(!vis[i]) {
+        cout << "IMPOSSIBLE\n";
+        return 0;
+    }
+    reverse(all(ans));
+    for(int i : ans) cout << i << ' ';
+    cout << ed << '\n';
     return 0;
 }

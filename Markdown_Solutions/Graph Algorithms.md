@@ -1851,6 +1851,7 @@ signed main() {
     rep(i, 1, n) cout << idx[i] << ' ';
     return 0;
 }
+
 ```
 
 ## Giant Pizza
@@ -1937,23 +1938,420 @@ signed main() {
 
 ## Coin Collector
 
-File not found.
+```c++ Coin Collector
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m, id = 0, ans = 0;
+vi g[100005], rg[100005], scc_g[100005], ord;
+int idx[100005], scc_room[100005], room[100005], dp[100005];
+bool vis[100005], rvis[100005], scc_vis[100005];
+
+void dfs(int rt){
+    if(vis[rt]) return;
+    vis[rt] = 1;
+    for(int i : g[rt]) dfs(i);
+    ord.eb(rt);
+}
+
+void rdfs(int rt){
+    if(rvis[rt]) return;
+    rvis[rt] = 1;
+    for(int i : rg[rt]) rdfs(i);
+    idx[rt] = id;
+    scc_room[id] += room[rt];
+}
+
+int scc_dfs(int rt){
+    if(scc_vis[rt]) return dp[rt];
+    scc_vis[rt] = 1;
+    int max_room = 0;
+    for(int i : scc_g[rt]) tomax(max_room, scc_dfs(i));
+    return dp[rt] = scc_room[rt] + max_room;
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, n) cin >> room[i];
+    rep(i, 1, m){
+        int a, b;
+        cin >> a >> b;
+        g[a].eb(b), rg[b].eb(a);
+    }
+    rep(i, 1, n) dfs(i);
+    reverse(all(ord));
+    for(int i : ord) if(!rvis[i]) id++, rdfs(i);
+    rep(i, 1, n) for(int j : g[i]) if(idx[i]!=idx[j])
+        scc_g[idx[i]].eb(idx[j]);
+    // rep(i, 1, n) err(i sp idx[i] sp room[i] sp scc_room[idx[i]]);
+    // rep(i, 1, id) for(int j : scc_g[i]) err(i sp j);
+    rep(i, 1, id) tomax(ans, scc_dfs(i));
+    cout << ans << '\n';
+    return 0;
+}
+```
 
 ## Mail Delivery
 
-File not found.
+```c++ Mail Delivery
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m, odd=1, ed=1, cnt_odd = 0;
+int deg[100005];
+vi g[100005], ans;
+bool vis[100005];
+map<pii, bool> evis;
+
+void dfs(int rt){
+    vis[rt] = 1;
+    while(!g[rt].empty()){
+        int cur = g[rt].back();
+        g[rt].pob();
+        if(evis[{rt, cur}]) continue;
+        evis[{rt, cur}] = 1, evis[{cur, rt}] = 1, dfs(cur);
+        ans.eb(rt);
+    }
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    si cg;
+    rep(i, 1, m){
+        int a, b;
+        cin >> a >> b;
+        g[a].eb(b), g[b].eb(a);
+        deg[a]++, deg[b]++;
+        cg.insert(a), cg.insert(b);
+    }
+    rep(i, 1, n) if(deg[i]&1) ed = odd, odd = i, cnt_odd++;
+    if(cnt_odd!=0) {
+        cout << "IMPOSSIBLE\n";
+        return 0;
+    }
+    dfs(odd);
+    for(int i : cg) if(!vis[i]) {
+        cout << "IMPOSSIBLE\n";
+        return 0;
+    }
+    reverse(all(ans));
+    for(int i : ans) cout << i << ' ';
+    cout << ed << '\n';
+    return 0;
+}
+```
+
+### set
+
+```c++ Mail Delivery - set
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m, st=1, ed=1, cnt_odd = 0;
+si g[100005];
+vi ans;
+
+void dfs(int rt){
+    while(!g[rt].empty()){
+        int cur = *g[rt].begin();
+        g[rt].erase(g[rt].begin());
+        g[cur].erase(rt);
+        dfs(cur);
+    }
+    ans.eb(rt);
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    si cg;
+    rep(i, 1, m){
+        int a, b;
+        cin >> a >> b;
+        g[a].insert(b), g[b].insert(a);
+    }
+    rep(i, 1, n) if(g[i].size()&1) ed = st, st = i, cnt_odd++;
+    if(cnt_odd!=0) {
+        cout << "IMPOSSIBLE\n";
+        return 0;
+    }
+    dfs(st);
+    rep(i, 1, n) if(!g[i].empty()) {
+        cout << "IMPOSSIBLE\n";
+        return 0;
+    }
+    reverse(all(ans));
+    for(int i : ans) cout << i << ' ';
+    return 0;
+}
+```
 
 ## De Bruijn Sequence
 
-File not found.
+```c++ De Bruijn Sequence
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n;
+vi g[100005], ans;
+
+void dfs(int rt){
+    while(!g[rt].empty()){
+        int cur = g[rt].back();
+        g[rt].pob();
+        dfs(cur);
+        ans.eb(rt&1);
+    }
+}
+
+signed main() {
+    ios;
+    cin >> n;
+    rev(i, (1<<(n-1))-1, 0){
+        int nxt = (i<<1) & ((1<<(n-1))-1);
+        g[i].eb(nxt);
+        g[i].eb(nxt+1);
+    }
+    dfs(0);
+    reverse(all(ans));
+    rep(i,1,n-1) cout << 0;
+    if(n==1) cout << "01";
+    else for(int i : ans) cout << i;
+    return 0;
+}
+```
 
 ## Teleporters Path
 
-File not found.
+```c++ Teleporters Path
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m, deg[100005];
+vi g[100005], ans;
+
+void dfs(int rt){
+    while(!g[rt].empty()){
+        int cur = g[rt].back();
+        g[rt].pob();
+        dfs(cur);
+    }
+    ans.eb(rt);
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, m){
+        int a, b;
+        cin >> a >> b;
+        g[a].eb(b);
+        deg[a]++, deg[b]++;
+    }
+    rep(i, 1+1, n-1) if(deg[i]&1){
+        cout << "IMPOSSIBLE\n";
+        return 0;
+    } 
+    if(!((deg[1]&1) && (deg[n]&1))){
+        cout << "IMPOSSIBLE\n";
+        return 0;
+    }
+    dfs(1);
+    rep(i, 1, n) if(!g[i].empty()){
+        cout << "IMPOSSIBLE\n";
+        return 0;
+    }
+    reverse(all(ans));
+    for(int i : ans) cout << i << ' ';
+    return 0;
+}
+```
 
 ## Hamiltonian Flights
 
-File not found.
+```c++ Hamiltonian Flights
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int mod = 1e9 + 7;
+int n, m;
+int dp[21][2000006];
+int g[21][21];
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, m) {
+        int a, b;
+        cin >> a >> b;
+        g[a][b]++;
+    }
+    dp[1][1] = 1;
+    // int op = 0;
+    rep(i, 1, (1 << n) - 1) {
+        rep(j, 1, n) {
+            int pos = (1 << (j - 1));
+            if (!(i & pos)) continue;
+            rep(k, 1, n) {
+                if (!g[k][j]) continue;
+                (dp[j][i] += dp[k][i^pos] * g[k][j]);
+                // op++;
+            }
+            dp[j][i] %= mod;
+        }
+        i++;  // first digit must be 1 because path start at one.
+    }
+    cout << dp[n][(1 << n) - 1] % mod << '\n';
+    return 0;
+}
+
+```
 
 ## Knight's Tour
 
@@ -1977,11 +2375,6 @@ File not found.
 
 ## Files not found
 
-Coin Collector
-Mail Delivery
-De Bruijn Sequence
-Teleporters Path
-Hamiltonian Flights
 Knight's Tour
 Download Speed
 Police Chase

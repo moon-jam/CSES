@@ -25,25 +25,10 @@ using namespace std;
 #define sp << " " <<
 #define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
 
-int id = 0;
+int mod = 1e9 + 7;
 int n, m;
-vi g[100005], rg[100005], ord;
-int idx[100005];
-bool vis[100005], rvis[100005];
-
-void dfs(int rt){
-    if(vis[rt]) return;
-    vis[rt] = 1;
-    for(int i : g[rt]) dfs(i);
-    ord.eb(rt);
-}
-
-void rdfs(int rt){
-    if(rvis[rt]) return;
-    rvis[rt] = 1;
-    for(int i : rg[rt]) rdfs(i);
-    idx[rt] = id;
-}
+int dp[21][2000006];
+int g[21][21];
 
 signed main() {
     ios;
@@ -51,13 +36,23 @@ signed main() {
     rep(i, 1, m) {
         int a, b;
         cin >> a >> b;
-        g[a].eb(b);
-        rg[b].eb(a);
+        g[a][b]++;
     }
-    rep(i, 1, n) dfs(i);
-    reverse(all(ord));
-    for(int i : ord) if(!rvis[i]) id++,rdfs(i);
-    cout << id << '\n';
-    rep(i, 1, n) cout << idx[i] << ' ';
+    dp[1][1] = 1;
+    // int op = 0;
+    rep(i, 1, (1 << n) - 1) {
+        rep(j, 1, n) {
+            int pos = (1 << (j - 1));
+            if (!(i & pos)) continue;
+            rep(k, 1, n) {
+                if (!g[k][j]) continue;
+                (dp[j][i] += dp[k][i^pos] * g[k][j]);
+                // op++;
+            }
+            dp[j][i] %= mod;
+        }
+        i++;  // first digit must be 1 because path start at one.
+    }
+    cout << dp[n][(1 << n) - 1] % mod << '\n';
     return 0;
 }
