@@ -22,7 +22,7 @@ void dfs(int i, int j){
 }
 
 signed main(){
-    // ios;
+    ios;
     cin >> n >> m;
     char tmp;
     memset(is_floor, 0, sizeof(is_floor));
