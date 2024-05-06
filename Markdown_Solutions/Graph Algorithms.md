@@ -2355,28 +2355,378 @@ signed main() {
 
 ## Knight's Tour
 
-File not found.
+```c++ Knight's Tour
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int x, y;
+int dir[8][2] = {{1, 2}, {2, 1}, {1, -2}, {-2, 1}, {-1, 2}, {2, -1}, {-1, -2}, {-2, -1}};
+bool vis[10][10];
+vii ans;
+int out[10][10];
+
+bool dfs(int x, int y, int cnt) {
+    if (vis[x][y]) return 0;
+    if (cnt == 63) {
+        ans.eb(x, y);
+        return 1;
+    }
+    vis[x][y] = 1;
+    cnt++;
+    vector<pair<int, pii>> go;
+    rep(i, 0, 7) {
+        if (x + dir[i][0] > 8 || x + dir[i][0] < 1 || y + dir[i][1] > 8 || y + dir[i][1] < 1) continue;
+        int nx = x + dir[i][0], ny = y + dir[i][1], deg = 0;
+        rep(i, 0, 7) if (!(nx + dir[i][0] > 8 || nx + dir[i][0] < 1 || ny + dir[i][1] > 8 || ny + dir[i][1] < 1)) deg++;
+        go.pb({deg, {nx, ny}});
+    }
+    sort(all(go));
+    for (auto i : go)
+        if (dfs(i.S.F, i.S.S, cnt)) {
+            ans.eb(x,y);
+            return 1;
+        }
+    vis[x][y] = 0;
+    return 0;
+}
+
+signed main() {
+    ios;
+    cin >> x >> y;
+    dfs(x, y, 0);
+    reverse(all(ans));
+    rep(i, 1, 64) { out[ans[i - 1].F][ans[i - 1].S] = i;}
+    rep(i, 1, 8) {
+        rep(j, 1, 8) cout << out[j][i] << ' ';
+        cout << '\n';
+    }
+    return 0;
+}
+```
 
 ## Download Speed
 
-File not found.
+```c++ Download Speed
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m;
+int adj[502][502];
+bool vis[502];
+
+bool dfs(int rt, vector<int> &path, int threshold) {
+    if (vis[rt]) return false;
+    vis[rt] = 1;
+    if (rt == n) {
+        path.push_back(rt);
+        return true;
+    }
+    rep(i, 1, n) {
+        if (adj[rt][i] < threshold) continue;
+        if (dfs(i, path, threshold)) {
+            path.push_back(rt);
+            return true;
+        }
+    }
+    return false;
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    int sum = 0;
+    rep(i, 1, m) {
+        int a, b, c;
+        cin >> a >> b >> c;
+        adj[a][b] += c;
+        sum += c;
+    }
+    int ans = 0;
+    while (sum > 0) {
+        vector<int> path;
+        memset(vis, 0, sizeof(vis));
+        if (dfs(1, path, sum)) {
+            reverse(path.begin(), path.end());
+            int k = path.size();
+            int flow = 1e9;
+            rep (i, 0, k-2) tomin(flow, adj[path[i]][path[i + 1]]);
+            ans += flow;
+            rep (i, 0, k-2) {
+                adj[path[i]][path[i + 1]] -= flow;
+                adj[path[i + 1]][path[i]] += flow;
+            }
+        } else sum /= 2;
+    }
+    cout << ans << "\n";
+    return 0;
+}
+```
 
 ## Police Chase
 
-File not found.
+```c++ Police Chase
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m, ans;
+int g[502][502];
+bool vis[502];
+
+bool dfs(int rt){
+    if(vis[rt]) return 0;
+    if(rt == n) return 1;
+    vis[rt] = 1;
+    rep(i, 1, n){
+        if(g[rt][i] && dfs(i)){
+            g[rt][i]--, g[i][rt]++;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, m){
+        int a, b;
+        cin >> a >> b;
+        g[a][b] = g[b][a] = 1;
+    }
+    while(dfs(1)) memset(vis, 0, sizeof(vis)), ans++;
+    cout << ans << '\n';
+    rep(i, 1, n){
+        rep(j, 1, n){
+            if((vis[i] ^ vis[j]) && !g[i][j] && g[j][i]) cout << i sp j << '\n';
+        }
+    }
+    return 0;
+}
+```
 
 ## School Dance
 
-File not found.
+```c++ School Dance
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
+
+int n, m, k, ans;
+int g[1003][1003];
+bool vis[1003];
+vi go[1003];
+
+bool dfs(int rt){
+    if(vis[rt]) return 0;
+    if(rt == 1001) return 1;
+    vis[rt] = 1;
+    rep(i, 1, 1001){
+        if(g[rt][i] && dfs(i)){
+            g[rt][i]--, g[i][rt]++;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+signed main() {
+    ios;
+    cin >> n >> m >> k;
+    rep(i, 1, k){
+        int a, b;
+        cin >> a >> b;
+        g[0][a] = g[a][b+500] = g[b+500][1001] = 1;
+        go[0].eb(a), go[a].eb(b+500), go[b+500].eb(1001);
+    }
+    while(dfs(0)) memset(vis, 0, sizeof(vis)), ans++;
+    cout << ans << '\n';
+    while(ans--){
+        int a, b, s = 0;
+        while(s != 1001){
+            a=b, b=s;
+            for(int i : go[s]) 
+                if(!g[s][i] && g[i][s]){
+                    g[s][i]=1;
+                    s=i;
+                    break;
+                }
+        }
+        cout << a sp b-500 << '\n';
+    }
+    return 0;
+}
+```
 
 ## Distinct Routes
 
-File not found.
+```c++ Distinct Routes
+#include <bits/stdc++.h>
+using namespace std;
+/* TYPES  */
+#define int long long
+#define pii pair<int, int>
+#define F first
+#define S second
+#define vc vector
+#define vi vector<int>
+#define vii vector<pii>
+#define mii map<int, int>
+#define si set<int>
+/* UTILS */
+#define rep(i, a, b) for (int i = a; i <= b; ++i)
+#define rev(i, a, b) for (int i = a; i >= b; --i)
+#define tomax(a, b) (a) = max((a), (b))
+#define tomin(a, b) (a) = min((a), (b))
+#define all(a) a.begin(), a.end()
+#define rall(a) (a).rbegin(), (a).rend()
+#define pob pop_back
+#define pb push_back
+#define eb emplace_back
+#define ins insert
+#define err(a) cerr << #a << ": " << a << "\n"
+#define sp << " " <<
+#define ios ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0)
 
-## Files not found
+int n, m, ans = 0;
+int g[502][502];
+bool vis[502];
+vi go[502];
 
-Knight's Tour
-Download Speed
-Police Chase
-School Dance
-Distinct Routes
+bool dfs(int rt){
+    if(vis[rt]) return 0;
+    if(rt == n) return 1;
+    vis[rt] = 1;
+    rep(i, 1, n){
+        if(g[rt][i] && dfs(i)) {
+            g[rt][i]--, g[i][rt]++;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+signed main() {
+    ios;
+    cin >> n >> m;
+    rep(i, 1, m){
+        int a, b;
+        cin >> a >> b;
+        g[a][b]++;
+        go[a].eb(b);
+    }
+    while(dfs(1)) memset(vis, 0, sizeof(vis)), ans++;
+    cout << ans << '\n';
+    while(ans--){
+        vi path(1,1);
+        int s = 1;
+        while(s!=n){
+            for(int i : go[s])
+                if(!g[s][i] && g[i][s]){
+                    g[i][s]=0;
+                    s=i;
+                    path.eb(i);
+                    break;
+                }
+        }
+        cout << path.size() << '\n';
+        for(int i : path) cout << i << ' ';
+        cout << '\n';
+    }
+    return 0;
+}
+```

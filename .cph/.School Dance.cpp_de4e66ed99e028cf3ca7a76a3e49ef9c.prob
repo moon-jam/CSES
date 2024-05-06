@@ -1,0 +1,1 @@
+{"name":"Local: School Dance","url":"/Users/moonjam/Desktop/Code/CSES/Graph Algorithms/School Dance.cpp","tests":[{"id":1714975704003,"input":"3 2 4\n1 1\n1 2\n2 1\n3 1","output":"2\n1 2\n3 1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/moonjam/Desktop/Code/CSES/Graph Algorithms/School Dance.cpp","group":"local","local":true}
