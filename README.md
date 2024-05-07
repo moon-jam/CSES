@@ -8,7 +8,7 @@
 
 ## [Generated Markdown Solutions](./Markdown_Solutions)
 
-Solved Tasks: 133/300
+## Solved Tasks: 133/300
 
 | Problem Set | Solved | Total |
 | ------- | ------ | ----- |

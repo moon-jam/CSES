@@ -34,7 +34,7 @@ for i, line in enumerate(lines):
         in_code_block = not in_code_block
     if not in_code_block:
         if "Solved Tasks:" in line:
-            lines[i] = f"Solved Tasks: {total_solved}/300\n"
+            lines[i] = f"## Solved Tasks: {total_solved}/300\n"
         for name, count in solved_problems.items():
             if name in line:
                 generate_markdown(name, folder_file_order[name])
