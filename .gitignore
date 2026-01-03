@@ -2,3 +2,4 @@
 .DS_Store
 ./cphb
 test.md
+__pycache__/
