@@ -3,3 +3,4 @@
 ./cphb
 test.md
 __pycache__/
+./**/output/
